@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <meta name="apple-mobile-web-app-capable"
+        content="yes">
+
+  <title>Zona Home</title>
+
+  <link rel="stylesheet"
+        href="css/styles.css">
+
+  <!-- A-Frame + MindAR (realidad aumentada por reconocimiento de imagen) -->
+  <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+
+<body>
+
+<div class="app">
+
+
+<!-- =====================================
+     SPLASH
+===================================== -->
+
+<section id="splash"
+         class="pantalla activa splash">
+
+  <img src="img/logo.png"
+       class="logo-splash"
+       alt="Zona Home">
+
+  <div class="slogan">
+    TU ZONA,
+    <span>TU PASIÓN.</span>
+  </div>
+
+  <div class="linea"></div>
+
+</section>
+
+
+
+<!-- =====================================
+     INICIO
+===================================== -->
+
+<section id="inicio"
+         class="pantalla">
+
+  <header class="topbar">
+
+    <button class="icon-btn"
+            onclick="abrirMenu()">
+      ☰
+    </button>
+
+    <div class="titulo-app">
+
+      <h1>ZONA HOME</h1>
+
+      <span>ZONA SUR</span>
+
+    </div>
+
+    <button class="icon-btn"
+            onclick="mostrarMensaje('Notificaciones')">
+      ♢
+    </button>
+
+  </header>
+
+
+  <main class="contenido">
+
+    <h2 class="pregunta">
+      ¿Qué quieres hacer hoy?
+    </h2>
+
+
+    <!-- ACCIONES PRINCIPALES -->
+
+    <div class="acciones">
+
+      <button class="accion principal"
+              onclick="mostrarPantalla('scanner')">
+
+        <div class="accion-icono">
+          📷
+        </div>
+
+        <strong>ESCANEAR</strong>
+
+        <small>
+          Realidad aumentada
+        </small>
+
+      </button>
+
+
+      <button class="accion"
+              onclick="mostrarPantalla('juegos')">
+
+        <div class="accion-icono">
+          🧩
+        </div>
+
+        <strong>JUEGOS</strong>
+
+        <small>
+          Trivia y rompecabezas
+        </small>
+
+      </button>
+
+
+      <button class="accion"
+              onclick="mostrarPantalla('noticias')">
+
+        <div class="accion-icono">
+          📰
+        </div>
+
+        <strong>NOTICIAS</strong>
+
+        <small>
+          Consulta noticias
+        </small>
+
+      </button>
+
+
+      <button class="accion"
+              onclick="mostrarPantalla('resultados')">
+
+        <div class="accion-icono">
+          📊
+        </div>
+
+        <strong>RESULTADOS</strong>
+
+        <small>
+          Partidos y posiciones
+        </small>
+
+      </button>
+
+    </div>
+
+
+
+    <!-- =================================
+         MARQUESINA DE EQUIPOS
+    ================================== -->
+
+    <div class="titulo-seccion">
+
+      <h3>EQUIPOS ZONA SUR</h3>
+
+      <button onclick="mostrarPantalla('equipos')">
+        Ver todos ›
+      </button>
+
+    </div>
+
+
+    <div class="marquesina-equipos">
+
+      <div id="marquesinaTrack"
+           class="marquesina-track">
+        <!-- Generado por js/equipos.js -->
+      </div>
+
+    </div>
+
+
+    <!-- ACCESO A RECOMPENSAS -->
+
+    <button class="mi-zona-card"
+            onclick="mostrarPantalla('miZona')">
+
+      <div class="mi-zona-icono">
+        ★
+      </div>
+
+      <div>
+
+        <strong>MI ZONA</strong>
+
+        <small>
+          Perfil y recompensas
+        </small>
+
+      </div>
+
+      <span>›</span>
+
+    </button>
+
+  </main>
+
+
+  <!-- NAVBAR -->
+
+  <nav class="navbar">
+
+    <button class="nav-item activo"
+            onclick="mostrarPantalla('inicio')">
+
+      <span>⌂</span>
+
+      Inicio
+
+    </button>
+
+
+    <button class="nav-item"
+            onclick="mostrarPantalla('equipos')">
+
+      <span>⚾</span>
+
+      Equipos
+
+    </button>
+
+
+    <button class="scan-nav"
+            onclick="mostrarPantalla('scanner')">
+
+      📷
+
+    </button>
+
+
+    <button class="nav-item"
+            onclick="mostrarPantalla('noticias')">
+
+      <span>📰</span>
+
+      Noticias
+
+    </button>
+
+
+    <button class="nav-item"
+            onclick="mostrarPantalla('resultados')">
+
+      <span>📊</span>
+
+      Resultados
+
+    </button>
+
+  </nav>
+
+</section>
+
+
+
+<!-- =====================================
+     MI ZONA / RECOMPENSAS
+===================================== -->
+
+<section id="miZona"
+         class="pantalla">
+
+  <div class="encabezado">
+
+    <button onclick="mostrarPantalla('inicio')">
+      ←
+    </button>
+
+    <h2>MI ZONA</h2>
+
+  </div>
+
+
+  <!-- PERFIL -->
+
+  <div class="perfil-card">
+
+    <div class="avatar-placeholder">
+      ♟
+    </div>
+
+    <div class="perfil-lineas">
+
+      <div class="linea-nombre"></div>
+
+      <div class="linea-nivel"></div>
+
+      <div class="linea-titulo"></div>
+
+    </div>
+
+
+    <div class="racha">
+
+      <span>🔥</span>
+
+      <strong>RACHA</strong>
+
+      <small>-- días</small>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- PROGRESO -->
+
+  <div class="progreso-card">
+
+    <div class="progreso-encabezado">
+
+      <span>PUNTOS</span>
+
+      <span>SIGUIENTE NIVEL</span>
+
+    </div>
+
+
+    <div class="barra-nivel">
+
+      <div></div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- RECOMPENSAS -->
+
+  <div class="titulo-recompensas">
+
+    <h3>
+      MIS RECOMPENSAS
+    </h3>
+
+  </div>
+
+
+  <div class="tabs-recompensas">
+
+    <button class="tab-recompensa activo"
+            onclick="mostrarRecompensa('titulos', this)">
+
+      🏅
+
+      <span>TÍTULOS</span>
+
+    </button>
+
+
+    <button class="tab-recompensa"
+            onclick="mostrarRecompensa('personalizacion', this)">
+
+      🎨
+
+      <span>PERSONALIZACIÓN</span>
+
+    </button>
+
+
+    <button class="tab-recompensa"
+            onclick="mostrarRecompensa('coleccion', this)">
+
+      🃏
+
+      <span>COLECCIÓN</span>
+
+    </button>
+
+  </div>
+
+
+
+  <!-- TITULOS -->
+
+  <div id="titulos"
+       class="contenido-recompensa activo">
+
+    <div class="titulo-placeholder disponible">
+
+      <span>🏅</span>
+
+      <div class="texto-placeholder">
+
+        <strong></strong>
+
+        <small></small>
+
+      </div>
+
+    </div>
+
+
+    <div class="titulo-placeholder bloqueado">
+
+      <span>🔒</span>
+
+      <div class="texto-placeholder">
+
+        <strong></strong>
+
+        <small></small>
+
+      </div>
+
+    </div>
+
+
+    <div class="titulo-placeholder bloqueado">
+
+      <span>🔒</span>
+
+      <div class="texto-placeholder">
+
+        <strong></strong>
+
+        <small></small>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- PERSONALIZACIÓN -->
+
+  <div id="personalizacion"
+       class="contenido-recompensa">
+
+    <h4>
+      COLORES
+    </h4>
+
+
+    <div class="colores-perfil">
+
+      <button class="color desbloqueado"></button>
+
+      <button class="color desbloqueado"></button>
+
+      <button class="color bloqueado">
+        🔒
+      </button>
+
+      <button class="color bloqueado">
+        🔒
+      </button>
+
+    </div>
+
+
+    <h4>
+      MARCOS
+    </h4>
+
+
+    <div class="marcos-perfil">
+
+      <button class="marco desbloqueado">
+        ○
+      </button>
+
+      <button class="marco bloqueado">
+        🔒
+      </button>
+
+      <button class="marco bloqueado">
+        🔒
+      </button>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- COLECCIÓN -->
+
+  <div id="coleccion"
+       class="contenido-recompensa">
+
+    <div class="coleccion-header">
+
+      <h4>
+        MI COLECCIÓN
+      </h4>
+
+      <span>-- / --</span>
+
+    </div>
+
+
+    <div class="coleccion-grid">
+
+
+      <button class="coleccion-card desbloqueada">
+
+        <div class="coleccion-imagen">
+          ⚾
+        </div>
+
+        <div class="coleccion-linea"></div>
+
+        <small>
+          DESBLOQUEADA
+        </small>
+
+      </button>
+
+
+      <button class="coleccion-card desbloqueada">
+
+        <div class="coleccion-imagen">
+          ⚾
+        </div>
+
+        <div class="coleccion-linea"></div>
+
+        <small>
+          DESBLOQUEADA
+        </small>
+
+      </button>
+
+
+      <button class="coleccion-card bloqueada">
+
+        <div class="coleccion-imagen">
+          🔒
+        </div>
+
+        <div class="coleccion-linea"></div>
+
+        <small>
+          BLOQUEADA
+        </small>
+
+      </button>
+
+
+      <button class="coleccion-card bloqueada">
+
+        <div class="coleccion-imagen">
+          🔒
+        </div>
+
+        <div class="coleccion-linea"></div>
+
+        <small>
+          BLOQUEADA
+        </small>
+
+      </button>
+
+
+      <button class="coleccion-card bloqueada">
+
+        <div class="coleccion-imagen">
+          ?
+        </div>
+
+        <div class="coleccion-linea"></div>
+
+        <small>
+          BLOQUEADA
+        </small>
+
+      </button>
+
+
+      <button class="coleccion-card bloqueada">
+
+        <div class="coleccion-imagen">
+          ?
+        </div>
+
+        <div class="coleccion-linea"></div>
+
+        <small>
+          BLOQUEADA
+        </small>
+
+      </button>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================
+     ESCÁNER
+===================================== -->
+
+<section id="scanner"
+         class="pantalla">
+
+  <div class="encabezado">
+
+    <button onclick="mostrarPantalla('inicio')">
+      ←
+    </button>
+
+    <h2>ESCÁNER AR</h2>
+
+  </div>
+
+
+  <div class="camara"
+       id="camaraAR">
+
+    <a-scene
+      id="arScene"
+      mindar-image="imageTargetSrc: targets/diablos.mind; autoStart: false; uiScanning: no; uiLoading: no;"
+      color-space="sRGB"
+      renderer="colorManagement: true, physicallyCorrectLights, preserveDrawingBuffer: true"
+      vr-mode-ui="enabled: false"
+      device-orientation-permission-ui="enabled: false"
+      embedded>
+
+      <a-assets>
+        <a-asset-item id="modeloGorra"
+                      src="models/Gorra.glb"></a-asset-item>
+      </a-assets>
+
+      <a-camera position="0 0 0"
+                look-controls="enabled: false"></a-camera>
+
+      <a-entity id="targetDiablos"
+                mindar-image-target="targetIndex: 0">
+
+        <a-gltf-model id="modeloAR"
+                      src="#modeloGorra"
+                      position="0 -0.5 0"
+                      scale="0.225 0.225 0.225"
+                      rotation="0 0 0"></a-gltf-model>
+
+      </a-entity>
+
+    </a-scene>
+
+    <p id="scanHint">
+      Apunta la cámara al logo de Diablos
+    </p>
+
+  </div>
+
+
+  <div class="ar-botones">
+
+    <button onclick="abrirInfoAR()">
+      Información
+    </button>
+
+    <button onclick="toggleAnimacionGorra()">
+      Animación
+    </button>
+
+    <button onclick="capturarPantallaAR()">
+      Captura
+    </button>
+
+    <button onclick="lanzarConfetiAR()">
+      Efectos
+    </button>
+
+  </div>
+
+
+  <div class="scanner-acciones">
+
+    <button onclick="mostrarPantalla('inicio')">
+      ← Regresar
+    </button>
+
+    <button onclick="mostrarMensaje('Listo para escanear')">
+      ↻ Escanear otro
+    </button>
+
+  </div>
+
+
+  <div class="overlay"
+       id="overlayInfoAR"
+       onclick="cerrarInfoAR()"></div>
+
+  <div class="hoja-info"
+       id="panelInfoGorra">
+
+    <div class="hoja-info-manija"></div>
+
+    <h3>Diablos Rojos del México</h3>
+
+    <p class="hoja-info-detalle">
+      Zona Sur · Liga Mexicana de Béisbol 2026
+    </p>
+
+    <p>
+      <strong>1er lugar</strong> de la Zona Sur en la temporada
+      regular 2026. En playoffs avanzaron el Primer Playoff, pero
+      fueron eliminados en la Serie de Zona ante Pericos de Puebla.
+    </p>
+
+    <p class="hoja-info-detalle">
+      Actualizado: 12 de septiembre de 2026
+    </p>
+
+    <button class="hoja-info-cerrar"
+            onclick="cerrarInfoAR()">
+      Cerrar
+    </button>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================
+     EQUIPOS
+===================================== -->
+
+<section id="equipos"
+         class="pantalla">
+
+  <div class="encabezado">
+
+    <button onclick="mostrarPantalla('inicio')">
+      ←
+    </button>
+
+    <h2>EQUIPOS</h2>
+
+  </div>
+
+
+ <div class="titulo-zona">
+  ZONA SUR
+</div>
+
+
+  <div class="lista-equipos">
+    <!-- Generado por js/equipos.js -->
+  </div>
+
+</section>
+
+
+
+<!-- =====================================
+     RESULTADOS
+===================================== -->
+
+<section id="resultados"
+         class="pantalla">
+
+  <div class="encabezado">
+
+    <button onclick="mostrarPantalla('inicio')">
+      ←
+    </button>
+
+    <h2>RESULTADOS</h2>
+
+  </div>
+
+
+  <div class="selector-fecha">
+
+    <button onclick="cambiarFechaResultados(-1)">‹</button>
+
+    <span id="fechaResultados">📅 6 AGO 2026</span>
+
+    <button onclick="cambiarFechaResultados(1)">›</button>
+
+  </div>
+
+  <p class="resultados-nota">
+    Cierre de la temporada regular 2026 · Zona Sur
+  </p>
+
+
+  <div class="resultado-item">
+    <span class="resultado-equipo">Piratas de Campeche</span>
+    <span class="resultado-marcador">9 - 1</span>
+    <span class="resultado-equipo">Olmecas de Tabasco</span>
+  </div>
+
+  <div class="resultado-item">
+    <span class="resultado-equipo">El Águila de Veracruz</span>
+    <span class="resultado-marcador">10 - 6</span>
+    <span class="resultado-equipo">Pericos de Puebla</span>
+  </div>
+
+  <div class="resultado-item">
+    <span class="resultado-equipo">Guerreros de Oaxaca</span>
+    <span class="resultado-marcador">12 - 3</span>
+    <span class="resultado-equipo">Diablos Rojos</span>
+  </div>
+
+
+  <button class="boton-borde ancho"
+          onclick="mostrarPantalla('posiciones')">
+
+    VER POSICIONES
+
+  </button>
+
+</section>
+
+
+
+<!-- =====================================
+     POSICIONES
+===================================== -->
+
+<section id="posiciones"
+         class="pantalla">
+
+  <div class="encabezado">
+
+    <button onclick="mostrarPantalla('resultados')">
+      ←
+    </button>
+
+    <h2>POSICIONES</h2>
+
+  </div>
+
+
+  <div class="tabs">
+
+    <button class="seleccionado">
+      ZONA SUR
+    </button>
+
+    <button>
+      GENERAL
+    </button>
+
+  </div>
+
+
+  <div class="tabla">
+
+    <div class="tabla-head">
+
+      <span>Equipo</span>
+
+      <span>G</span>
+
+      <span>P</span>
+
+      <span>%</span>
+
+      <span>GB</span>
+
+    </div>
+
+
+    <div class="tabla-linea">
+      <span>Diablos Rojos</span>
+      <span>64</span>
+      <span>29</span>
+      <span>.688</span>
+      <span>—</span>
+    </div>
+
+    <div class="tabla-linea">
+      <span>Olmecas Tabasco</span>
+      <span>54</span>
+      <span>38</span>
+      <span>.587</span>
+      <span>9.5</span>
+    </div>
+
+    <div class="tabla-linea">
+      <span>Piratas Campeche</span>
+      <span>52</span>
+      <span>41</span>
+      <span>.559</span>
+      <span>12</span>
+    </div>
+
+    <div class="tabla-linea">
+      <span>Pericos Puebla</span>
+      <span>50</span>
+      <span>42</span>
+      <span>.543</span>
+      <span>13.5</span>
+    </div>
+
+    <div class="tabla-linea">
+      <span>Bravos León</span>
+      <span>50</span>
+      <span>43</span>
+      <span>.538</span>
+      <span>14</span>
+    </div>
+
+    <div class="tabla-linea">
+      <span>Guerreros Oaxaca</span>
+      <span>48</span>
+      <span>45</span>
+      <span>.516</span>
+      <span>16</span>
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================
+     NOTICIAS
+===================================== -->
+
+<section id="noticias"
+         class="pantalla">
+
+  <div class="encabezado">
+
+    <button onclick="mostrarPantalla('inicio')">
+      ←
+    </button>
+
+    <h2>NOTICIAS</h2>
+
+  </div>
+
+
+  <div class="noticias-lista">
+
+    <article class="noticia-card">
+
+      <div class="noticia-imagen">🏆</div>
+
+      <div class="noticia-texto">
+        <span class="noticia-fecha">16 sep 2026</span>
+        <h4>Toros de Tijuana, campeones de la Serie del Rey 2026</h4>
+        <p>
+          Vencieron 4-2 a Olmecas de Tabasco en el Juego 6 y se
+          coronaron por tercera vez en su historia (2017, 2021, 2026).
+        </p>
+      </div>
+
+    </article>
+
+    <article class="noticia-card">
+
+      <div class="noticia-imagen">🌴</div>
+
+      <div class="noticia-texto">
+        <span class="noticia-fecha">Zona Sur</span>
+        <h4>Olmecas de Tabasco regresó a la final tras 33 años</h4>
+        <p>
+          Los tabasqueños conquistaron la Zona Sur y llegaron a su
+          primera Serie del Rey desde 1993.
+        </p>
+      </div>
+
+    </article>
+
+    <article class="noticia-card">
+
+      <div class="noticia-imagen">👹</div>
+
+      <div class="noticia-texto">
+        <span class="noticia-fecha">Zona Sur</span>
+        <h4>Diablos Rojos, eliminados en la Serie de Zona</h4>
+        <p>
+          Los defensores del título cayeron ante Pericos de Puebla
+          y se quedaron sin el tricampeonato.
+        </p>
+      </div>
+
+    </article>
+
+    <article class="noticia-card">
+
+      <div class="noticia-imagen">⭐</div>
+
+      <div class="noticia-texto">
+        <span class="noticia-fecha">16 sep 2026</span>
+        <h4>Hernán Pérez, MVP de la Serie del Rey 2026</h4>
+        <p>
+          El venezolano de Toros de Tijuana se llevó el premio tras
+          su aportación ofensiva clave en los juegos 2 y 5 de la final.
+        </p>
+      </div>
+
+    </article>
+
+    <article class="noticia-card">
+
+      <div class="noticia-imagen">🐐</div>
+
+      <div class="noticia-texto">
+        <span class="noticia-fecha">Zona Sur</span>
+        <h4>Pericos rompe el reinado de Diablos en 6 juegos</h4>
+        <p>
+          Puebla blanqueó 3-0 a los Diablos en el Juego 6 de la
+          Serie de Zona y terminó con el bicampeonato escarlata.
+        </p>
+      </div>
+
+    </article>
+
+    <article class="noticia-card">
+
+      <div class="noticia-imagen">🏟️</div>
+
+      <div class="noticia-texto">
+        <span class="noticia-fecha">Temporada regular 2026</span>
+        <h4>Diablos Rojos cerró como líder absoluto de la LMB</h4>
+        <p>
+          Terminaron con marca de 64-29 (.688) y diferencial de
+          +233 carreras, el mejor registro de toda la liga.
+        </p>
+      </div>
+
+    </article>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================
+     JUEGOS
+===================================== -->
+
+<section id="juegos"
+         class="pantalla">
+
+  <div class="encabezado">
+
+    <button onclick="mostrarPantalla('inicio')">
+      ←
+    </button>
+
+    <h2>JUEGOS</h2>
+
+  </div>
+
+
+  <div class="juegos-grid">
+
+    <button class="juego-card"
+            onclick="mostrarPantalla('trivia')">
+
+      <div>🧠</div>
+
+      <h3>TRIVIA</h3>
+
+    </button>
+
+
+    <button class="juego-card"
+            onclick="mostrarPantalla('rompecabezas')">
+
+      <div>🧩</div>
+
+      <h3>ROMPECABEZAS</h3>
+
+    </button>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================
+     TRIVIA
+===================================== -->
+
+<section id="trivia"
+         class="pantalla">
+
+  <div class="encabezado">
+
+    <button onclick="mostrarPantalla('juegos')">
+      ←
+    </button>
+
+    <h2>TRIVIA</h2>
+
+  </div>
+
+
+  <div class="trivia-top">
+
+    <span>
+      Pregunta 1 de 10
+    </span>
+
+    <div class="barra">
+
+      <div></div>
+
+    </div>
+
+  </div>
+
+
+  <div class="pregunta-placeholder"></div>
+
+
+  <div class="respuestas">
+
+    <button onclick="seleccionarRespuesta(this)">
+      Opción A
+    </button>
+
+    <button onclick="seleccionarRespuesta(this)">
+      Opción B
+    </button>
+
+    <button onclick="seleccionarRespuesta(this)">
+      Opción C
+    </button>
+
+    <button onclick="seleccionarRespuesta(this)">
+      Opción D
+    </button>
+
+  </div>
+
+
+  <button class="boton-verde ancho"
+          onclick="mostrarMensaje('Respuesta seleccionada')">
+
+    RESPONDER
+
+  </button>
+
+</section>
+
+
+
+<!-- =====================================
+     ROMPECABEZAS
+===================================== -->
+
+<section id="rompecabezas"
+         class="pantalla">
+
+  <div class="encabezado">
+
+    <button onclick="mostrarPantalla('juegos')">
+      ←
+    </button>
+
+    <h2>ROMPECABEZAS</h2>
+
+  </div>
+
+
+  <div class="puzzle-info">
+
+    <div>
+
+      <small>TIEMPO</small>
+
+      <strong>00:00</strong>
+
+    </div>
+
+
+    <div>
+
+      <small>MOVIMIENTOS</small>
+      <strong id="puzzle-movimientos">0</strong>
+    </div>
+
+  </div>
+
+ <div
+    class="puzzle"
+    id="puzzle-tablero"
+    aria-label="Rompecabezas de Diablos Rojos">
+  </div>
+
+  <div class="puzzle-botones">
+    <button class="boton-verde"
+            onclick="mostrarPantalla('juegos')">
+      MENÚ
+    </button>
+  </div>
+
+  <div class="puzzle-botones">
+
+    <button class="boton-borde"
+            onclick="mostrarMensaje('Rompecabezas reiniciado')">
+
+      ↻ REINICIAR
+
+    </button>
+
+
+    <button class="boton-verde"
+            onclick="mostrarPantalla('juegos')">
+
+      MENÚ
+
+    </button>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================
+     VIDEOS
+===================================== -->
+
+<section id="videos"
+         class="pantalla">
+
+  <div class="encabezado">
+
+    <button onclick="mostrarPantalla('inicio')">
+      ←
+    </button>
+
+    <h2>VIDEOS</h2>
+
+  </div>
+
+
+  <div class="video-box">
+
+    <iframe
+      src="https://www.youtube-nocookie.com/embed/CWrvLWrRoqw"
+      title="Resumen Diablos 10-1 Piratas | LMB Banorte 2026"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen></iframe>
+
+  </div>
+
+
+  <h3 class="subtitulo">
+    FILTROS
+  </h3>
+
+
+  <div class="filtros-video">
+
+    <button onclick="activarFiltro(this)">
+      Desenfoque
+    </button>
+
+    <button onclick="activarFiltro(this)">
+      Pixelado
+    </button>
+
+    <button onclick="activarFiltro(this)">
+      Cámara térmica
+    </button>
+
+    <button onclick="activarFiltro(this)">
+      Ajuste de color
+    </button>
+
+    <button onclick="activarFiltro(this)">
+      Suavizado
+    </button>
+
+    <button onclick="activarFiltro(this)">
+      Colores pastel
+    </button>
+
+    <button onclick="activarFiltro(this)">
+      Alta saturación
+    </button>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================
+     CONFIGURACION
+===================================== -->
+
+<section id="configuracion"
+         class="pantalla">
+
+  <div class="encabezado">
+
+    <button onclick="mostrarPantalla('inicio')">
+      ←
+    </button>
+
+    <h2>CONFIGURACIÓN</h2>
+
+  </div>
+
+
+  <div class="configuracion">
+
+    <div>
+
+      <span>Sonidos</span>
+
+      <button onclick="toggleConfig(this)">
+        Activado
+      </button>
+
+    </div>
+
+
+    <div>
+
+      <span>Animaciones</span>
+
+      <button onclick="toggleConfig(this)">
+        Activado
+      </button>
+
+    </div>
+
+
+    <div>
+
+      <span>Notificaciones</span>
+
+      <button onclick="toggleConfig(this)">
+        Activado
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================
+     ACERCA
+===================================== -->
+
+<section id="acerca"
+         class="pantalla">
+
+  <div class="encabezado">
+
+    <button onclick="mostrarPantalla('inicio')">
+      ←
+    </button>
+
+    <h2>ACERCA DE</h2>
+
+  </div>
+
+
+  <div class="acerca">
+
+    <img src="img/logo.png"
+         alt="Zona Home">
+
+    <h3>
+
+      TU ZONA,
+
+      <span>
+        TU PASIÓN.
+      </span>
+
+    </h3>
+
+    <div class="linea"></div>
+
+    <small>
+      Versión 1.0.0
+    </small>
+
+  </div>
+
+</section>
+
+
+</div>
+
+
+
+<!-- =====================================
+     OVERLAY
+===================================== -->
+
+<div id="overlay"
+     class="overlay"
+     onclick="cerrarMenu()">
+</div>
+
+
+
+<!-- =====================================
+     MENÚ LATERAL
+===================================== -->
+
+<aside id="menuLateral"
+       class="menu-lateral">
+
+  <div class="menu-logo">
+
+    <img src="img/logo.png"
+         alt="Zona Home">
+
+  </div>
+
+
+  <nav class="menu-opciones">
+
+    <button onclick="irDesdeMenu('inicio')">
+      <span>⌂</span>
+      Inicio
+    </button>
+
+
+    <button onclick="irDesdeMenu('miZona')">
+      <span>★</span>
+      Mi Zona
+    </button>
+
+
+    <button onclick="irDesdeMenu('scanner')">
+      <span>📷</span>
+      Escáner AR
+    </button>
+
+
+    <button onclick="irDesdeMenu('equipos')">
+      <span>⚾</span>
+      Equipos
+    </button>
+
+
+    <button onclick="irDesdeMenu('resultados')">
+      <span>📊</span>
+      Resultados
+    </button>
+
+
+    <button onclick="irDesdeMenu('posiciones')">
+      <span>🏆</span>
+      Posiciones
+    </button>
+
+
+    <button onclick="irDesdeMenu('noticias')">
+      <span>📰</span>
+      Noticias
+    </button>
+
+
+    <button class="menu-juegos"
+            onclick="toggleJuegos()">
+
+      <span>🎮</span>
+
+      Juegos
+
+      <strong>›</strong>
+
+    </button>
+
+
+    <div id="submenuJuegos"
+         class="submenu">
+
+      <button onclick="irDesdeMenu('trivia')">
+        🧠 Trivia
+      </button>
+
+      <button onclick="irDesdeMenu('rompecabezas')">
+        🧩 Rompecabezas
+      </button>
+
+    </div>
+
+
+    <button onclick="irDesdeMenu('videos')">
+      <span>▶</span>
+      Videos
+    </button>
+
+
+    <div class="separador"></div>
+
+
+    <button onclick="irDesdeMenu('configuracion')">
+      <span>⚙</span>
+      Configuración
+    </button>
+
+
+    <button onclick="irDesdeMenu('acerca')">
+      <span>ⓘ</span>
+      Acerca de Zona Home
+    </button>
+
+  </nav>
+
+
+  <div class="menu-footer">
+
+    <div class="sol">
+      ☀
+    </div>
+
+    <strong>
+
+      TU ZONA,
+
+      <span>
+        TU PASIÓN.
+      </span>
+
+    </strong>
+
+    <small>
+      Versión 1.0.0
+    </small>
+
+  </div>
+
+</aside>
+
+
+
+<div id="mensaje"
+     class="mensaje">
+</div>
+
+
+<script src="js/equipos.js"></script>
+<script src="js/script.js"></script>
+<script src="js/ar.js"></script>
+
+</body>
+</html>
